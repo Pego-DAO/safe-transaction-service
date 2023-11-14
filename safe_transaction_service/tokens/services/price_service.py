@@ -72,7 +72,9 @@ class PriceServiceProvider:
 class PriceService:
     def __init__(self, ethereum_client: EthereumClient, redis: Redis):
         self.ethereum_client = ethereum_client
-        self.ethereum_network = self.ethereum_client.get_network()
+        self.ethereum_network = self.ethereum_client.get_network() # unknow -1
+        if self.ethereum_network == EthereumNetwork.UNKNOWN:
+            self.ethereum_network = self.ethereum_client.get_chain_id() # chain_id
         self.redis = redis
         self.coingecko_client = CoingeckoClient(self.ethereum_network)
         self.kraken_client = KrakenClient()
@@ -203,6 +205,9 @@ class PriceService:
     def get_mtr_usd_price(self) -> float:
         return self.coingecko_client.get_mtr_usd_price()
 
+    def get_peg_usd_price(self) -> float:
+         return self.coingecko_client.get_peg_usd_price()
+
     @cachedmethod(cache=operator.attrgetter("cache_ether_usd_price"))
     @cache_memoize(60 * 30, prefix="balances-get_ether_usd_price")  # 30 minutes
     def get_ether_usd_price(self) -> float:
@@ -305,6 +310,11 @@ class PriceService:
             EthereumNetwork.FANTOM_TESTNET,
         ):
             return self.get_ftm_usd_price()
+        elif self.ethereum_network in (
+            123456,
+            20201022
+        ):
+            return self.get_peg_usd_price()
         else:
             return self.get_ether_usd_price()
 

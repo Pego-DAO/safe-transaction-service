@@ -1,3 +1,5 @@
+*For Pego Network deployment, see `pego-deployment.md`*
+
 ![Build Status](https://github.com/safe-global/safe-transaction-service/workflows/Python%20CI/badge.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/safe-global/safe-transaction-service/badge.svg?branch=master)](https://coveralls.io/github/safe-global/safe-transaction-service?branch=master)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)

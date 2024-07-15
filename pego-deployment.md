@@ -33,7 +33,26 @@ CSRF_TRUSTED_ORIGINS=https://transaction.suitcase.plus,https://config.suitcase.p
 
 ```
 
-2. Run this repo with docker
+2. Update source of pego price
+```
+# In file safe_transaction_service/tokens/clients/coingecko_client.py,
+# search for the code snippet bleow and update Coingecko's API ID.
+def get_peg_usd_price(self) -> float:
+    return self.get_price("pego-network-2")
+
+# In file safe_transaction_service/tokens/services/price_service.py,
+# search for the code snippet below and update chain id accordingly.
+def get_native_coin_usd_price(self) -> float:
+    ...
+    elif self.ethereum_network in (
+        123456,
+        20201022
+    ):
+        return self.get_peg_usd_price()
+    ...
+```
+
+3. Run this repo with docker
 ```
 # To build docker
 docker-compose build --force-rm
@@ -46,12 +65,12 @@ docker ps -a
 ```
 *Note: Some proccess might exited due to database dependencies. Check the docker processes and run `docker-compose up -d` to restart exited processes after database has created.*
 
-3. Create an account to login transaction service,
+4. Create an account to login transaction service,
 ```
 docker exec -it <web-docker-container-id> python manage.py createsuperuser
 ```
 
-4. Login to transaction service admin site at `<site_url>/admin`, and provide value to the following menu,
+5. Login to transaction service admin site at `<site_url>/admin`, and provide value to the following menu,
     - `Chains` at `<site_url>/admin/history/chain/`, add chain Id.
     - `Proxy factories` at `<site_url>/admin/history/proxyfactory/`, add proxy factory contract address and contract creation block number.
     - `Safe master copies` at `<site_url>/admin/history/safemastercopy/`, GnosisSafe contract address, contract creation block number and version as 1.3.0.

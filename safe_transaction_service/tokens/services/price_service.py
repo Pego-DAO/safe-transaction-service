@@ -311,8 +311,8 @@ class PriceService:
         ):
             return self.get_ftm_usd_price()
         elif self.ethereum_network in (
-            123456,
-            20201022
+            174,
+            173
         ):
             return self.get_peg_usd_price()
         else:

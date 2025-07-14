@@ -151,4 +151,4 @@ class CoingeckoClient(BaseHTTPClient):
     def get_mtr_usd_price(self) -> float:
         return self.get_price("meter-stable")
     def get_peg_usd_price(self) -> float:
-        return self.get_price("pego-network-2")
+        return self.get_price("")
